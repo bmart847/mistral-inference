@@ -101,7 +101,7 @@ def _get_multimodal_input() -> Tuple[UserMessage, bool]:
 
 def interactive(
     model_path: str,
-    max_tokens: int = 35,
+    max_tokens: int = 512,
     temperature: float = 0.7,
     num_pipeline_ranks: int = 1,
     instruct: bool = False,
@@ -121,7 +121,7 @@ def interactive(
     tokenizer: Tokenizer = mistral_tokenizer.instruct_tokenizer.tokenizer
 
     model_cls = get_model_cls(model_path)
-    model = model_cls.from_folder(Path(model_path), max_batch_size=3, num_pipeline_ranks=num_pipeline_ranks)
+    model = model_cls.from_folder(Path(model_path), max_batch_size=3, num_pipeline_ranks=num_pipeline_ranks, dtype=torch.float16)
     is_multimodal = isinstance(model.args, TransformerArgs) and model.args.vision_encoder is not None
 
     if is_multimodal:

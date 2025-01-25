@@ -121,7 +121,7 @@ def interactive(
     tokenizer: Tokenizer = mistral_tokenizer.instruct_tokenizer.tokenizer
 
     model_cls = get_model_cls(model_path)
-    model = model_cls.from_folder(Path(model_path), max_batch_size=3, num_pipeline_ranks=num_pipeline_ranks, dtype=torch.float16)
+    model = model_cls.from_folder(Path(model_path), max_batch_size=3, num_pipeline_ranks=num_pipeline_ranks, dtype=torch.float8_e5m2)
     is_multimodal = isinstance(model.args, TransformerArgs) and model.args.vision_encoder is not None
 
     if is_multimodal:
